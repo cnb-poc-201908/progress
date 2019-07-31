@@ -42,7 +42,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://bpm-register:10001/eureka
+      defaultZone: http://bmw-register:10001/eureka
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
