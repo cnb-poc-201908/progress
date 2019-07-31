@@ -1,0 +1,26 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  namespace: sit
+  name: bmw-progress
+spec:
+  selector:
+    matchLabels:
+      app: bmw-progress
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: bmw-progress
+    spec:
+      containers:
+      - name: bmw-progress
+        image: registry.cn-beijing.aliyuncs.com/bmwpoc/progress:sit
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 20001
+        env:
+        - name: spring_profiles_active
+          value: k8s 
+      imagePullSecrets: 
+      - name: bmwpoc

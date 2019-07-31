@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: sit
+  name: bmw-progress
+  labels:
+    app: bmw-progress
+spec:
+  ports:
+  - port: 20001
+    targetPort: 20001
+    protocol: TCP
+  selector:
+    app: bmw-progress
