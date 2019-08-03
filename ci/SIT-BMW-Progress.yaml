@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sit-bmw-progress
+  namespace: sit
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sit-bmw-progress
+    spec:
+      containers:
+        - name: sit-bmw-progress
+          image: registry.cn-beijing.aliyuncs.com/bmwpoc/sit-bmw-progress:{version}
+          ports:
+            - name: http-port
+              containerPort: 20001
+      imagePullSecrets:
+        - name: bmwpoc

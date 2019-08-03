@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: uat-bmw-progress
+  namespace: uat
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: uat-bmw-progress
+    spec:
+      containers:
+        - name: uat-bmw-progress
+          image: registry.cn-beijing.aliyuncs.com/bmwpoc/uat-bmw-progress:{version}
+          ports:
+            - name: http-port
+              containerPort: 20001
+      imagePullSecrets:
+        - name: bmwpoc
