@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pro-bmw-progress
+  namespace: pro
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pro-bmw-progress
+    spec:
+      containers:
+        - name: pro-bmw-progress
+          image: registry.cn-beijing.aliyuncs.com/bmwpoc/pro-bmw-progress:{version}
+          ports:
+            - name: http-port
+              containerPort: 20001
+      imagePullSecrets:
+        - name: bmwpoc
