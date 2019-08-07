@@ -1,11 +1,17 @@
 spring:
   profiles:
-    active: k8s
+    active: local
 ---
 spring:
   profiles: local
   application:
     name: bmw-progress
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /statics/**
+  redis:
+    host: 112.126.99.2
+    port: 31379
 server:
   port: 20001
 
@@ -14,10 +20,22 @@ eureka:
     service-url:
       defaultZone: http://localhost:10001/eureka
   instance:
-    securePortEnabled: true
-#    prefer-ip-address: true
+#    securePortEnabled: true
+    prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
-    
+security:
+  oauth2:
+    client:
+      grantType: client_credentials
+      clientId: "Di7hBWKdZbATm4EAqAghniLQz1MGvjdS"
+      clientSecret: "9LJWr8ztDW9jkW2C"
+      accessTokenUri: https://stageidp.apigw.cdkapps.cn/auth/token
+      scope: showroom
+api:
+  serviceUri: https://stage.apigw.cdkapps.cn/service
+  endpoints:
+    repairOrders: /repair-orders
+          
 # 服务管理配置
 management:
   endpoints:
@@ -29,12 +47,24 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+logging:
+  level:
+    com.bmw.progress.service: DEBUG
 
+feign:
+  hystrix:
+    enabled: true   
 ---
 spring:
   profiles: k8s
   application:
     name: bmw-progress
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /statics/**
+  redis:
+    host: 112.126.99.2
+    port: 31379
 server:
   port: 20001
   
@@ -47,6 +77,18 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
     
+security: 
+  oauth2: 
+    client:
+      grantType: client_credentials
+      clientId: "Di7hBWKdZbATm4EAqAghniLQz1MGvjdS"
+      clientSecret: "9LJWr8ztDW9jkW2C"
+      accessTokenUri: https://stageidp.apigw.cdkapps.cn/auth/token
+      scope: showroom
+api:
+  serviceUri: https://stage.apigw.cdkapps.cn/service
+  endpoints:
+    repairOrders: /repair-orders 
 # 服务管理配置
 management:
   endpoints:
@@ -58,5 +100,10 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+logging:
+  level:
+    com.bmw.progress.service: DEBUG
 
-        
+feign:
+  hystrix:
+    enabled: true       
